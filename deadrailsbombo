@@ -218,7 +218,7 @@ end)
             })
         end
     })
-
+end
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
@@ -227,3 +227,4 @@ SaveManager:SetFolder("Bombohubrails/dead-rails")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
+end 
