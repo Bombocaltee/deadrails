@@ -209,9 +209,9 @@ end)
                         end
                     },
                     {
-                        Title = "Cancel ❌",
+                        Title = "Cancel ✖️",
                         Callback = function()
-                            print("Cancelled ✔️")
+                            print("Cancelled ☑️")
                         end
                     },
                 }
