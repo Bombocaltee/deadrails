@@ -219,6 +219,112 @@ end)
         end
     })
 end
+
+Tabs.Main:AddButton({
+        Title = "Noclip 🧱",
+        Description = "Noclips through the wall 👣",
+        Callback = function()
+            Window:Dialog({
+                Title = "Alert ⚠️",
+                Content = "Once executed Cant the button cannot go 🔘",
+                Buttons = {
+                    {
+                        Title = "Confirm ✅ ",
+                        Callback = function(Value)
+-- Noclip Toggle UI (Fancy & Functional)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local noclip = false
+
+-- Function to apply collision state
+local function setCollision(state)
+    if character then
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") and not part:IsDescendantOf(workspace.Terrain) then
+                part.CanCollide = state
+            end
+        end
+    end
+end
+
+-- UI Setup
+local gui = Instance.new("ScreenGui")
+gui.Name = "NoclipUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 160, 0, 50)
+frame.Position = UDim2.new(0, 20, 0, 100)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.BorderSizePixel = 0
+frame.BackgroundTransparency = 0.1
+frame.AnchorPoint = Vector2.new(0, 0)
+frame.Parent = gui
+
+-- Make it draggable
+frame.Active = true
+frame.Draggable = true
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(1, 0, 1, 0)
+toggleButton.BackgroundTransparency = 1
+toggleButton.Font = Enum.Font.GothamBold
+toggleButton.TextSize = 16
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Text = "Noclip: OFF"
+toggleButton.Parent = frame
+
+-- Fancy toggle behavior
+local function updateButton()
+    toggleButton.Text = noclip and "Noclip: ON" or "Noclip: OFF"
+    frame.BackgroundColor3 = noclip and Color3.fromRGB(0, 170, 90) or Color3.fromRGB(25, 25, 25)
+end
+
+toggleButton.MouseButton1Click:Connect(function()
+    noclip = not noclip
+    updateButton()
+end)
+
+-- Handle noclip each frame (only disable collisions if needed)
+RunService.Stepped:Connect(function()
+    if noclip and character then
+        setCollision(false)
+    end
+end)
+
+-- Restore collisions if player turns off noclip
+RunService.Heartbeat:Connect(function()
+    if not noclip and character then
+        setCollision(true)
+    end
+end)
+
+-- Reset on character respawn
+player.CharacterAdded:Connect(function(char)
+    character = char
+end)
+
+-- Initialize button
+updateButton()
+
+                            print("Success ✔️")
+                        end
+                    },
+                    {
+                        Title = "Cancel ❌",
+                        Callback = function()
+                            print("Cancelled ✖️")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
